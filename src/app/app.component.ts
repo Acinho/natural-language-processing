@@ -67,6 +67,8 @@ export class AppComponent {
 			desifrovanTekst += parSlova ? parSlova.desifrovanoSlovo : sifrovanTekst[i];
 		}
 		this.forma.get('desifrovan').setValue(desifrovanTekst);
+		for (let key in SLOVA)
+			SLOVA[key] = 0;
 	}
 
 	private ukloniSpecijalneKaraktere(tekst: string): string {

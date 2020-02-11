@@ -28,35 +28,35 @@ export class AppComponent {
 		const sifrovanTekst: string = this.forma.get('sifrovan').value;
 		const ociscenTekst: string = this.ukloniSpecijalneKaraktere(sifrovanTekst);
 
-		const nizVerovatnocePojavljivanjaSifrovan = [];
-		for (let k in VEROVATNOCE_POJAVLJIVANJA_SIFROVAN)
-			nizVerovatnocePojavljivanjaSifrovan.push({ slovo: k, verovatnoca: VEROVATNOCE_POJAVLJIVANJA_SIFROVAN[k] });
-		nizVerovatnocePojavljivanjaSifrovan.sort(this.poredjenje);
-		console.log(nizVerovatnocePojavljivanjaSifrovan);
+		const verovatnocePojavljivanjaDesifrovan = [];
+		for (let k in VEROVATNOCE_POJAVLJIVANJA_DESIFROVAN)
+			verovatnocePojavljivanjaDesifrovan.push({ slovo: k, verovatnoca: VEROVATNOCE_POJAVLJIVANJA_DESIFROVAN[k] });
+		verovatnocePojavljivanjaDesifrovan.sort(this.poredjenje);
+		console.log(verovatnocePojavljivanjaDesifrovan);
 
 		for (let i = 0; i < ociscenTekst.length; i++)
 			SLOVA[ociscenTekst.charAt(i)]++;
 
-		const nizVerovatnocePojavljivanjaDesifrovan = [];
+		const verovatnocePojavljivanjaSifrovan = [];
 		for (let k in SLOVA)
-			nizVerovatnocePojavljivanjaDesifrovan.push({ slovo: k, verovatnoca: SLOVA[k] / ociscenTekst.length });
-		nizVerovatnocePojavljivanjaDesifrovan.sort(this.poredjenje);
-		console.log(nizVerovatnocePojavljivanjaDesifrovan);
+			verovatnocePojavljivanjaSifrovan.push({ slovo: k, verovatnoca: SLOVA[k] / ociscenTekst.length });
+		verovatnocePojavljivanjaSifrovan.sort(this.poredjenje);
+		console.log(verovatnocePojavljivanjaSifrovan);
 
 		const nizParovaSlova = [];
-		for (let i = 0; i < nizVerovatnocePojavljivanjaSifrovan.length; i++) {
+		for (let i = 0; i < verovatnocePojavljivanjaDesifrovan.length; i++) {
 			let najmanjaRazlika: number = 1000;
 			let indeks: number = 0;
-			for (let j = 0; j < nizVerovatnocePojavljivanjaDesifrovan.length; j++) {
-				const razlika: number = nizVerovatnocePojavljivanjaDesifrovan[j].verovatnoca - nizVerovatnocePojavljivanjaSifrovan[i].verovatnoca;
+			for (let j = 0; j < verovatnocePojavljivanjaSifrovan.length; j++) {
+				const razlika: number = verovatnocePojavljivanjaSifrovan[j].verovatnoca - verovatnocePojavljivanjaDesifrovan[i].verovatnoca;
 				if (Math.abs(razlika) < najmanjaRazlika) {
 					najmanjaRazlika = razlika;
 					indeks = j;
 				}
 			}
 			nizParovaSlova.push({
-				sifrovanoSlovo: nizVerovatnocePojavljivanjaSifrovan[i].slovo,
-				desifrovanoSlovo: nizVerovatnocePojavljivanjaDesifrovan[indeks].slovo
+				sifrovanoSlovo: verovatnocePojavljivanjaSifrovan[indeks].slovo,
+				desifrovanoSlovo: verovatnocePojavljivanjaDesifrovan[i].slovo
 			});
 		}
 		console.log(nizParovaSlova);
@@ -150,7 +150,7 @@ const SLOVA: { [key: string]: number } = {
 	'š': 0,
 };
 
-const VEROVATNOCE_POJAVLJIVANJA_SIFROVAN: { [key: string]: number } = {
+const VEROVATNOCE_POJAVLJIVANJA_DESIFROVAN: { [key: string]: number } = {
 	'L': 0.000281557954012201,
 	'N': 0.00168934772407321,
 	'O': 0.00187705302674801,
@@ -182,8 +182,7 @@ const VEROVATNOCE_POJAVLJIVANJA_SIFROVAN: { [key: string]: number } = {
 	'ž': 0.00628812763960582
 };
 
-const SIFROVAN_TEKST: string = `
-kojnžuOuzL vn cć večć L murLNć jnce, kjpn tnanle Noe cć tnvescL mnmrLa. gc umSešL u 
+const SIFROVAN_TEKST: string = `kojnžuOuzL vn cć večć L murLNć jnce, kjpn tnanle Noe cć tnvescL mnmrLa. gc umSešL u 
 anlu lnču u hemlćvcOća ojćcuoSu, ut ehNoć rćmćlOć L lnjau. DjuNore Oć pLle rćlLSe, 
 aceđepjeOce, L ucnhjćv mhjćace cn luvemoL, cn anlć mlepevć, cnlntćzL mć rćz u ecea 
 jntvjnRlOLrea jnmheleRćcOu u SeOć uhnvnOu mrL rnjeNncL šLa mć cnču u hjLjevL L rnc 

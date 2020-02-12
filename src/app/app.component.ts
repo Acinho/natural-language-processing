@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class AppComponent {
 
 	forma: FormGroup;
+	nizParovaSlova: { sifrovanoSlovo: string, desifrovanoSlovo: string }[];
 
 	constructor(private fb: FormBuilder) {
 		this.forma = this.fb.group({
@@ -22,6 +23,7 @@ export class AppComponent {
 			sifrovan: { value: SIFROVAN_TEKST, disabled: true },
 			desifrovan: { value: undefined, disabled: true }
 		});
+		this.nizParovaSlova = [];
 	}
 
 	desifruj(): void {
@@ -43,7 +45,7 @@ export class AppComponent {
 		verovatnocePojavljivanjaSifrovan.sort(this.poredjenje);
 		console.log(verovatnocePojavljivanjaSifrovan);
 
-		const nizParovaSlova = [];
+		this.nizParovaSlova = [];
 		for (let i = 0; i < verovatnocePojavljivanjaDesifrovan.length; i++) {
 			let najmanjaRazlika: number = 1000;
 			let indeks: number = 0;
@@ -54,16 +56,15 @@ export class AppComponent {
 					indeks = j;
 				}
 			}
-			nizParovaSlova.push({
+			this.nizParovaSlova.push({
 				sifrovanoSlovo: verovatnocePojavljivanjaSifrovan[indeks].slovo,
 				desifrovanoSlovo: verovatnocePojavljivanjaDesifrovan[i].slovo
 			});
 		}
-		console.log(nizParovaSlova);
 
 		let desifrovanTekst: string = '';
 		for (let i = 0; i < sifrovanTekst.length; i++) {
-			const parSlova = nizParovaSlova.find(x => x.sifrovanoSlovo == sifrovanTekst[i]);
+			const parSlova = this.nizParovaSlova.find(x => x.sifrovanoSlovo == sifrovanTekst[i]);
 			desifrovanTekst += parSlova ? parSlova.desifrovanoSlovo : sifrovanTekst[i];
 		}
 		this.forma.get('desifrovan').setValue(desifrovanTekst);

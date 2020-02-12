@@ -1,14 +1,23 @@
-<form [formGroup]="forma" style="display: flex; flex-direction: column;">
-	<div style="display: flex; justify-content: space-around;">
-		<div style="display: flex; flex-direction: column; align-items: center;">
-			<label>Šifrovan tekst:</label>
-			<textarea style="width: 350px;" formControlName="sifrovan" rows="25"></textarea>
+<div style="display: flex; flex-direction: column;">
+	<form [formGroup]="forma" style="display: flex; flex-direction: column;">
+		<div style="display: flex; justify-content: space-around;">
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<label>Šifrovan tekst:</label>
+				<textarea style="width: 350px;" formControlName="sifrovan" rows="25"></textarea>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<label>Dešifrovan tekst:</label>
+				<textarea style="width: 350px;" formControlName="desifrovan" rows="25"></textarea>
+			</div>
 		</div>
-		<div style="display: flex; flex-direction: column; align-items: center;">
-			<label>Dešifrovan tekst:</label>
-			<textarea style="width: 350px;" formControlName="desifrovan" rows="25"></textarea>
+		<br />
+		<button style="width: 100px; align-self: center;" (click)="desifruj()">Dešifruj</button>
+		<button style="width: 100px; align-self: center;" (click)="resetuj()">Resetuj</button>
+	</form>
+	<hr />
+	<div style="align-self: center;">
+		<div *ngFor="let parSlova of nizParovaSlova;">
+			<span *ngIf="parSlova.desifrovanoSlovo">{{parSlova.sifrovanoSlovo}} ==> {{parSlova.desifrovanoSlovo}}</span>
 		</div>
 	</div>
-	<br />
-	<button style="width: 100px; align-self: center;" (click)="desifruj()">Dešifruj</button>
-</form>
+</div>
